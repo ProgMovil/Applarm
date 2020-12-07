@@ -45,43 +45,36 @@ const ScrPrincipal=({route,navigation})=>{
         
     },[vlt]);
     
-    crono = {
+    let crono = {
         timer: null,
         min: 0,
         seg: 0,
         cent:0,
     }
+    
+    const [cent, setCent] = useState(0);
 
-    let segundo = 0;
-    const [cont,setCont] = useState(crono);
+    const [centecima, setCount1] = useState(crono);
 
     const inicio = () => {
         if (crono.timer == null){
             crono.timer = setInterval(() => {
-                if (crono.seg == 9.99999999999998){
+                crono.seg += 0.01;
+                if (crono.seg == 60){
                     crono.min++;
                     crono.seg = 0;
                 }
-                crono.seg += 0.1;
-                console.log(crono);
-                console.log(cont);
-                console.log("********************************************************************");
-                return crono;
-            }, 100);
+                setCent(cent + 0.01);
+                console.log(crono.timer);
+            }, 1);
         }else{
             clearInterval(crono.timer);
             crono.timer = null;
         }
     }
-    
+
     const detener = () => {
-        crono.cent = 0;
-        crono.seg = 0;
-        crono.min = 0;
-        clearInterval(crono.timer);
-        console.log(crono);
-        console.log(cont);
-        console.log("********************************************************************");
+
     }
 
     //Pantalla principal
@@ -96,9 +89,9 @@ const ScrPrincipal=({route,navigation})=>{
             </Button>
         </View>
         <View style={styles.crono}>
-            <Text style={styles.tmin}>{crono.min}</Text>
-            <Text style={styles.tseg}>{cont.seg.toFixed(2)}</Text>
-            <Text style={styles.tcentseg}>{crono.cent}</Text>
+            <Text style={styles.tmin}>{centecima.min}m</Text>
+            <Text style={styles.tseg}>{centecima.seg.toFixed(2)}</Text>
+            <Text style={styles.tcentseg}>{centecima.cent}</Text>
         </View>
         
         <View style={styles.bid}>
@@ -110,7 +103,7 @@ const ScrPrincipal=({route,navigation})=>{
                     <Text style={styles.tbtni}>Vuelta</Text>
                 }
             </TouchableOpacity>
-            <TouchableOpacity onPress={detener}>
+            <TouchableOpacity  >
                 <Text style={styles.tbtni}>Detener</Text>
             </TouchableOpacity>
         </View>
