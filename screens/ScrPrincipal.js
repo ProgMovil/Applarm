@@ -28,23 +28,28 @@ const ScrPrincipal=({route,navigation})=>{
     
     const [estado, setestado] = useState(true)
     const [vuelta,setVuelta]=useState(true)
+    const [stop,setstop]=useState(false)
     let status;
     let vlt;
+    let dtn;
     const changeStatus= ()=>{
+     dtn=!stop;
+     setstop(dtn);
      status=!estado;
      setestado(status);
-  
+     
     }
     
     const changevuelta =()=>{
         vlt=!vuelta;
         setVuelta(vlt);
-        console.log(vlt);
+       
     }
+
     useEffect(()=>{
-        console.log("vuelta");
+       
         
-    },[vlt]);
+    },[vuelta]);
     
 
     //Pantalla principal
@@ -54,9 +59,19 @@ const ScrPrincipal=({route,navigation})=>{
             <H1 style={styles.Titulo}>Cronometro</H1>
         </Header>
         <View>
-            <Button style={styles.bmarca}>
+            
+            <Button style={styles.bmarca} onPress={()=> estado?navigation.navigate("Marcadores"):false}>
                 <Text style={styles.tmarca}>Marcadores</Text>
             </Button>
+        </View>
+        <View style={styles.bid}>
+            
+        <TouchableOpacity >  
+                    <Text style={styles.btni}>Guardar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity   >  
+                    <Text style={styles.btndc}>Cancelar</Text>
+        </TouchableOpacity>
         </View>
         <View style={styles.crono}>
             <Text style={styles.tcrono}>00S</Text>
@@ -65,14 +80,14 @@ const ScrPrincipal=({route,navigation})=>{
         <TouchableOpacity onPress={() => estado?changeStatus():changevuelta()}  >
                 {   
                     estado?
-                    <Text style={styles.tbtni}>Iniciar</Text>
+                    <Text style={styles.btni}>Iniciar</Text>
                     :
-                    <Text style={styles.tbtni}>Vuelta</Text>
+                    <Text style={styles.btni}>Vuelta</Text>
                 }
                 
         </TouchableOpacity>
-        <TouchableOpacity  >
-            <Text style={styles.tbtni}>Detener</Text>
+        <TouchableOpacity  onPress={() => stop?changeStatus():false}>
+            <Text style={styles.btndc}>Detener</Text>
         </TouchableOpacity>
         </View>
     </Container>
@@ -93,13 +108,14 @@ const styles = StyleSheet.create({
         alignItems:"center"
     },
     Titulo:{
+        paddingTop:15,
         color:"#FC4D5D",
-        fontSize:30,
+        fontSize:35,
     },
     bmarca:{
         width:width,
         justifyContent:"center",
-        backgroundColor:"#F0F0F0"
+        backgroundColor:"#FCFCFC"
     },
     tmarca:{
         color:"#FC4D5D",
@@ -109,7 +125,7 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:"center",
         alignItems:"center",
-        backgroundColor:"#f1f1"
+        backgroundColor:"#fff"
     },
     tcrono:{
         color:"#FC4D5D",
@@ -117,19 +133,31 @@ const styles = StyleSheet.create({
     },
     bid:{
         flex:1/7,
-        backgroundColor:"#D0C7C7",
+        backgroundColor:"#FAFAFA",
         flexDirection:"row",
         justifyContent:"space-evenly",
         alignItems:"center",
+     
     },
-    tbtni:{
-       backgroundColor:"#f1f",
+    btni:{
+       padding:5,
+       backgroundColor:"#FC4D5D",
        width:width*0.25,
        height:30,
        alignItems:"center",
        textAlign:"center",
        color:"#fff",
        borderRadius:25,
+    },
+    btndc:{
+        padding:5,
+        backgroundColor:"#7B7171",
+        width:width*0.25,
+        height:30,
+        alignItems:"center",
+        textAlign:"center",
+        color:"#fff",
+        borderRadius:25,
     }
 
 });
