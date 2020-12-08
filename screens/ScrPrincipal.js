@@ -32,7 +32,8 @@ const ScrPrincipal=({route,navigation})=>{
     let status;
     let vlt;
     let dtn;
-    const changeStatus= ()=>{
+    let ir=false;
+    const changeStatus= (dr)=>{
      dtn=!stop;
      setstop(dtn);
      status=!estado;
@@ -61,28 +62,48 @@ const ScrPrincipal=({route,navigation})=>{
           pause,
           reset,
         } = useStopwatch({ autoStart: false });
-      
+        
       
         return (
-            <View style={styles.crono}>
+            <Container>
+                <View>
+                    <Button style={styles.bmarca} onPress={()=> isRunning?false:navigation.navigate("Marcadores")}>
+                        <Text style={styles.tmarca}>Marcadores</Text>
+                    </Button>
+                </View>
+                <View style={styles.bid}>
+                    <TouchableOpacity >  
+                                <Text style={styles.btni}>Guardar</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity   >  
+                                <Text style={styles.btndc}>Cancelar</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.crono}>
                 <View style={styles.tmr}>
                     <H2 style={styles.tmin}>{hours}H:{minutes}M:{seconds}S</H2>
                 </View>
-                
+               
                 <View style={styles.bid}>
-                    <TouchableOpacity onPress={start}>
+                    
                         {   
                             isRunning?
+                            <TouchableOpacity onPress={console.log("Vuelta")}>
                             <Text style={styles.btni}>Vuelta</Text>
+                            </TouchableOpacity>
                             :
+                            <TouchableOpacity onPress={start}>
                             <Text style={styles.btni}>Iniciar</Text>
+                            </TouchableOpacity>
                         }
-                    </TouchableOpacity>
+                    
                     <TouchableOpacity  onPress={pause}>
                         <Text style={styles.btndc}>Pausa</Text>
                     </TouchableOpacity>
                 </View>       
             </View>
+            </Container>
+            
             
         
         );
@@ -96,19 +117,7 @@ const ScrPrincipal=({route,navigation})=>{
         <Header searchBar rounded style={styles.header} androidStatusBarColor="#000">
             <H1 style={styles.Titulo}>Cronometro</H1>
         </Header>
-        <View>
-            <Button style={styles.bmarca} onPress={()=> estado?navigation.navigate("Marcadores"):false}>
-                <Text style={styles.tmarca}>Marcadores</Text>
-            </Button>
-        </View>
-        <View style={styles.bid}>
-        <TouchableOpacity >  
-                    <Text style={styles.btni}>Guardar</Text>
-        </TouchableOpacity>
-        <TouchableOpacity   >  
-                    <Text style={styles.btndc}>Cancelar</Text>
-        </TouchableOpacity>
-        </View>
+        
 
         <MyStopwatch/>
         
