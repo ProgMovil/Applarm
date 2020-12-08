@@ -1,4 +1,4 @@
-import React, { useEffect, useState , } from "react";
+import React, { useEffect, useState ,Component, } from "react";
 import { StyleSheet, Text, Dimensions, Keyboard,Image, Alert} from "react-native";
 import {
     Container,
@@ -17,7 +17,8 @@ import {
 } from "native-base";
 import { color } from "react-native-reanimated";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
+import { render } from "react-dom";
+import { useStopwatch } from 'react-timer-hook';
 
 const { width, height } = Dimensions.get("window");
 
@@ -27,13 +28,16 @@ const ScrPrincipal=({route,navigation})=>{
     
     const [estado, setestado] = useState(true)
     const [vuelta,setVuelta]=useState(true)
+    const [stop,setstop]=useState(false)
     let status;
     let vlt;
-
+    let dtn;
     const changeStatus= ()=>{
+     dtn=!stop;
+     setstop(dtn);
      status=!estado;
      setestado(status);
-  
+     
     }
     
     const changevuelta =()=>{
@@ -41,79 +45,74 @@ const ScrPrincipal=({route,navigation})=>{
         setVuelta(vlt);
     }
     useEffect(()=>{
-        console.log("vuelta");
+      
         
     },[vlt]);
     
-    crono = {
-        timer: null,
-        min: 0,
-        seg: 0,
-        cent:0,
-    }
-
-    let segundo = 0;
-    const [cont,setCont] = useState(crono);
-
-    const inicio = () => {
-        if (crono.timer == null){
-            crono.timer = setInterval(() => {
-                if (crono.seg == 9.99999999999998){
-                    crono.min++;
-                    crono.seg = 0;
-                }
-                crono.seg += 0.1;
-                console.log(crono);
-                console.log(cont);
-                console.log("********************************************************************");
-                return crono;
-            }, 100);
-        }else{
-            clearInterval(crono.timer);
-            crono.timer = null;
-        }
-    }
-    
-    const detener = () => {
-        crono.cent = 0;
-        crono.seg = 0;
-        crono.min = 0;
-        clearInterval(crono.timer);
-        console.log(crono);
-        console.log(cont);
-        console.log("********************************************************************");
-    }
+ 
+    function MyStopwatch() {
+        const {
+          seconds,
+          minutes,
+          hours,
+          days,
+          isRunning,
+          start,
+          pause,
+          reset,
+        } = useStopwatch({ autoStart: false });
+      
+      
+        return (
+            <View style={styles.crono}>
+                <View style={styles.tmr}>
+                    <H2 style={styles.tmin}>{hours}H:{minutes}M:{seconds}S</H2>
+                </View>
+                
+                <View style={styles.bid}>
+                    <TouchableOpacity onPress={start}>
+                        {   
+                            isRunning?
+                            <Text style={styles.btni}>Vuelta</Text>
+                            :
+                            <Text style={styles.btni}>Iniciar</Text>
+                        }
+                    </TouchableOpacity>
+                    <TouchableOpacity  onPress={pause}>
+                        <Text style={styles.btndc}>Pausa</Text>
+                    </TouchableOpacity>
+                </View>       
+            </View>
+            
+        
+        );
+      }
 
     //Pantalla principal
+    
   return( 
+      
     <Container style={styles.Container}>
         <Header searchBar rounded style={styles.header} androidStatusBarColor="#000">
             <H1 style={styles.Titulo}>Cronometro</H1>
         </Header>
         <View>
-            <Button style={styles.bmarca}>
+            <Button style={styles.bmarca} onPress={()=> estado?navigation.navigate("Marcadores"):false}>
                 <Text style={styles.tmarca}>Marcadores</Text>
             </Button>
         </View>
-        <View style={styles.crono}>
-            <Text style={styles.tmin}>{crono.min}</Text>
-            <Text style={styles.tseg}>{cont.seg.toFixed(2)}</Text>
-            <Text style={styles.tcentseg}>{crono.cent}</Text>
-        </View>
-        
         <View style={styles.bid}>
-            <TouchableOpacity onPress={() => estado?changeStatus():changevuelta()} onPress={inicio}>
-                {   
-                    estado?
-                    <Text style={styles.tbtni}>Iniciar</Text>
-                    :
-                    <Text style={styles.tbtni}>Vuelta</Text>
-                }
-            </TouchableOpacity>
-            <TouchableOpacity onPress={detener}>
-                <Text style={styles.tbtni}>Detener</Text>
-            </TouchableOpacity>
+        <TouchableOpacity >  
+                    <Text style={styles.btni}>Guardar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity   >  
+                    <Text style={styles.btndc}>Cancelar</Text>
+        </TouchableOpacity>
         </View>
+
+        <MyStopwatch/>
+        
+    
     </Container>
 
   );
@@ -147,12 +146,12 @@ const styles = StyleSheet.create({
     crono:{
         flex:1,
         justifyContent:"center",
-        alignItems:"center",
-        flexDirection:"row",
-        backgroundColor:"#f1f1"
-    },tmin:{
-        color:"#000",
-        fontSize:60,
+        backgroundColor:"#FBFF07"
+    },
+    tmin:{
+        paddingTop:20,
+        color:"#FC4D5D",
+        fontSize:35,
     },
     tseg:{
         color:"#FC4D5D",
@@ -165,6 +164,14 @@ const styles = StyleSheet.create({
         paddingTop:21,
         marginLeft:15,
     },
+    tmr:{
+        flex:1,
+        backgroundColor:"#fff",
+        justifyContent:"center",
+        alignContent:"center",
+        alignItems:"center",
+        
+    },
     bid:{
         flex:1/7,
         backgroundColor:"#D0C7C7",
@@ -172,8 +179,9 @@ const styles = StyleSheet.create({
         justifyContent:"space-evenly",
         alignItems:"center",
     },
-    tbtni:{
-       backgroundColor:"#f1f",
+    btni:{
+        padding:5,
+       backgroundColor:"#FC4D5D",
        width:width*0.25,
        height:30,
        display:"flex",
@@ -182,6 +190,16 @@ const styles = StyleSheet.create({
        textAlign:"center",
        color:"#fff",
        borderRadius:25,
+    },
+    btndc:{
+        padding:5,
+        backgroundColor:"#7B7171",
+        width:width*0.25,
+        height:30,
+        alignItems:"center",
+        textAlign:"center",
+        color:"#fff",
+        borderRadius:25,
     },
     prueba:{
         backgroundColor:"#f1f",
