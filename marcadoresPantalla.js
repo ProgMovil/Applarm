@@ -1,33 +1,3 @@
-import React, { useEffect, useState, useContext } from "react";
-import { StyleSheet, Text, Dimensions, Keyboard,Image} from "react-native";
-import {
-    Container,
-    Header,
-    Item,
-    Input,
-    Icon,
-    Content,
-    View,
-    H2,
-    Button,
-    Card,
-    H3,
-    Left,
-    H1,
-    Fab,
-    List,
-    ListItem,
-    
-} from "native-base";
-import { color } from "react-native-reanimated";
-import { TouchableOpacity } from "react-native-gesture-handler";
-
-import { DatesContext } from "../context/DatesContext";
-
-
-const { width, height } = Dimensions.get("window");
-
-//Pantalla Principal
 const ScrPrincipal=({route,navigation})=>{
     const { fechas } = useContext(DatesContext);
     //Variables
@@ -87,31 +57,3 @@ const ScrPrincipal=({route,navigation})=>{
 
   );
 }; 
-//Termina ScrPrincipal
-
-
-const styles = StyleSheet.create({
-    Container:{
-        flex:1,
-        backgroundColor:"#F9F9F9", 
-    },
-    header:{
-        backgroundColor:"#F9F9F9",
-        justifyContent:"space-between",
-        alignItems:"center"
-    },
-    Titulo:{
-   
-        paddingTop:15,
-        color:"#FC4D5D",
-        fontSize:35,
-    },
-    icn:{
-
-        color:"#FC4D5D",
-        fontSize:45,
-    }
-
-});
-
-export default ScrPrincipal;
