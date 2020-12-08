@@ -6,14 +6,14 @@ const useDatabase = () => {
 
   const loadDatabase = async () => {
     try {
-      // await database.dropDatabaseTableAsync();
-      // await database.setupDatabaseTableAsync();
-      // await database.setupNotesAsync();
+       await database.dropDatabaseTableAsync();
+       await database.setupDatabaseTableAsync();
+       await database.setupDatesAsync();
 
       // Finaliza la carga de la DB
       setIsLoadingComplete(true);
     } catch (error) {
-      console.log(error);
+      console.log(error+"Isloading");
     }
   };
 

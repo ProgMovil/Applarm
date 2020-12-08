@@ -29,7 +29,7 @@ const { width, height } = Dimensions.get("window");
 
 //Pantalla Principal
 const ScrPrincipal=({route,navigation})=>{
-    const { fechas } = useContext(DatesContext);
+    const { fecha } = useContext(DatesContext);
     //Variables
     
     const [estado, setestado] = useState(true)
@@ -62,16 +62,33 @@ const ScrPrincipal=({route,navigation})=>{
   return( 
     <Container>
       <Content>
+      <Header searchBar rounded style={styles.header} androidStatusBarColor="#000">
+            <H1 style={styles.Titulo}>Marcadores</H1>
+            <TouchableOpacity onPress={() => navigation.navigate('Principal')} >
+                <Icon name="home" style={styles.icn}/>
+            </TouchableOpacity>  
+        </Header>
+        {console.log(fecha+"No hay")}
         <List>
-          {fechas
-            ? fechas.map((fecha) => (
+          {fecha
+            ? fecha.map((fecha) => (
                 <ListItem key={fecha.PKfechaID.toString()}>
                   <Text>{fecha.fecha.toString()}</Text>
                 </ListItem>
               ))
-            : null}
+            : <Text>No hay No existe</Text>}
         </List>
-        <Fab
+       
+      </Content>
+    </Container>
+
+  );
+}; 
+//Termina ScrPrincipal
+
+/* 
+
+ <Fab
           active={true}
           position="bottomRight"
           style={{ backgroundColor: "#ff0023" }}
@@ -82,14 +99,8 @@ const ScrPrincipal=({route,navigation})=>{
         >
           <Icon name="plus" type="FontAwesome" />
         </Fab>
-      </Content>
-    </Container>
 
-  );
-}; 
-//Termina ScrPrincipal
-
-
+*/
 const styles = StyleSheet.create({
     Container:{
         flex:1,

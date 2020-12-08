@@ -4,22 +4,39 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import ScrPrincipal from './screens/ScrPrincipal';
 import ScrMarcadores from './screens/ScrMarcadores'
-
-
+import useDatabase from "./hooks/useDatabase";
+import {DatesContextProvider} from "./context/DatesContext";
+import { View,Text } from 'native-base';
 
 
 const Stack = createStackNavigator();
 
 export default function App() {
+  const isloadingComplete = useDatabase();
+  if(!isloadingComplete){
+    return(
+      <Text>No</Text>
+    );
+    
+  }else{
+
+  
   return (
-    <NavigationContainer>
+   <View style={{ flex: 1 }}>
+     <DatesContextProvider>
+     <NavigationContainer>
       <Stack.Navigator initialRouteName="Principal"  >
         <Stack.Screen name = "Principal" component={ScrPrincipal} options={{ headerShown: false }} />
         <Stack.Screen name = "Marcadores" component={ScrMarcadores} options={{ headerShown: false }} />
-       </Stack.Navigator>
+       </Stack.Navigator>      
     </NavigationContainer>
-
+     </DatesContextProvider>
+    
+   </View>
+    
+   
   );
+  }
 }
 
 const styles = StyleSheet.create({

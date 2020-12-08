@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,Component, } from "react";
+import React, { useEffect, useState ,Component,useContext, } from "react";
 import { StyleSheet, Text, Dimensions, Keyboard,Image, Alert} from "react-native";
 import {
     Container,
@@ -19,7 +19,7 @@ import { color } from "react-native-reanimated";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { render } from "react-dom";
 import { useStopwatch } from 'react-timer-hook';
-
+import { DatesContext} from '../context/DatesContext'
 const { width, height } = Dimensions.get("window");
 
 //Pantalla Principal
@@ -29,6 +29,7 @@ const ScrPrincipal=({route,navigation})=>{
     const [estado, setestado] = useState(true)
     const [vuelta,setVuelta]=useState(true)
     const [stop,setstop]=useState(false)
+    
     let status;
     let vlt;
     let dtn;
@@ -49,7 +50,7 @@ const ScrPrincipal=({route,navigation})=>{
       
         
     },[vlt]);
-    
+       
  
     function MyStopwatch() {
         const {
@@ -62,17 +63,27 @@ const ScrPrincipal=({route,navigation})=>{
           pause,
           reset,
         } = useStopwatch({ autoStart: false });
+        const datesContext = useContext(DatesContext);
+        const { addNewDate, refreshDates } = datesContext;
+        const [fecha,setfecha]=useState("")
+        const handlerNewNote = () => {
+            console.log("Fecha");
+            setfecha(`${hours}${minutes}${seconds}`)
+            addNewDate(fecha, refreshDates);
         
-      
+            // Regresar a la pantalla anterior
+            
+          };   
+          
         return (
             <Container>
-                <View>
+                <View style={{backgroundColor:"#D0C7C7"}}>
                     <Button style={styles.bmarca} onPress={()=> isRunning?false:navigation.navigate("Marcadores")}>
                         <Text style={styles.tmarca}>Marcadores</Text>
                     </Button>
                 </View>
                 <View style={styles.bid}>
-                    <TouchableOpacity >  
+                    <TouchableOpacity  onPress={handlerNewNote}>  
                                 <Text style={styles.btni}>Guardar</Text>
                     </TouchableOpacity>
                     <TouchableOpacity   >  
@@ -81,14 +92,14 @@ const ScrPrincipal=({route,navigation})=>{
                 </View>
                 <View style={styles.crono}>
                 <View style={styles.tmr}>
-                    <H2 style={styles.tmin}>{hours}H:{minutes}M:{seconds}S</H2>
+                    <H2 style={styles.tmin}>{hours}h: {minutes}m: {seconds}s</H2>
                 </View>
                
                 <View style={styles.bid}>
                     
                         {   
                             isRunning?
-                            <TouchableOpacity onPress={console.log("Vuelta")}>
+                            <TouchableOpacity >
                             <Text style={styles.btni}>Vuelta</Text>
                             </TouchableOpacity>
                             :
@@ -132,7 +143,7 @@ const ScrPrincipal=({route,navigation})=>{
 const styles = StyleSheet.create({
     Container:{
         flex:1,
-        backgroundColor:"#F9F9F9", 
+        backgroundColor:"#D0C7C7", 
     },
     header:{
         backgroundColor:"#F9F9F9",
@@ -146,7 +157,10 @@ const styles = StyleSheet.create({
     bmarca:{
         width:width,
         justifyContent:"center",
-        backgroundColor:"#F0F0F0"
+        backgroundColor:"#F0F0F0",
+     
+        
+
     },
     tmarca:{
         color:"#FC4D5D",
@@ -155,7 +169,8 @@ const styles = StyleSheet.create({
     crono:{
         flex:1,
         justifyContent:"center",
-        backgroundColor:"#FBFF07"
+        backgroundColor:"#D0C7C7",
+        
     },
     tmin:{
         paddingTop:20,
@@ -179,10 +194,12 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignContent:"center",
         alignItems:"center",
+        borderBottomRightRadius:25,
+        borderBottomLeftRadius:25,
         
     },
     bid:{
-        flex:1/7,
+        flex:1/8,
         backgroundColor:"#D0C7C7",
         flexDirection:"row",
         justifyContent:"space-evenly",

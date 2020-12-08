@@ -69,7 +69,7 @@ const setupDatabaseTableAsync = async () => {
       db.transaction(
         (tx) => {
           tx.executeSql(
-            "create table if not exists fecha (PKfechaID id integer primary key, fecha date not null);"
+            "create table if not exists fecha (PKfechaID integer primary key, fecha text not null);"
           );
         },
         (_t, error) => {
@@ -96,7 +96,8 @@ const setupDatesAsync = async () => {
       },
       (_t, error) => {
         console.log("Error al momento de insertar los valores por defecto");
-        console.log(error);
+        console.log(_t);
+        Console.log(error);
         reject(error);
       },
       (_t, success) => {
