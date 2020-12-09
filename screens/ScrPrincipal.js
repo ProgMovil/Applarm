@@ -65,12 +65,19 @@ const ScrPrincipal=({route,navigation})=>{
         } = useStopwatch({ autoStart: false });
         const datesContext = useContext(DatesContext);
         const { addNewDate, refreshDates } = datesContext;
-        const [fecha,setfecha]=useState("")
+        const [fecha,setfecha]=useState(null);
+        const temps=[];
+        const handlertemps = () => {
+           
+           temps.push((`${hours}s${minutes}m${seconds}s`))
+            console.log(temps);
+            // Regresar a la pantalla anterior
+            
+          };  
         const handlerNewNote = () => {
-            console.log("Fecha");
-            setfecha(`${hours}${minutes}${seconds}`)
-            addNewDate(fecha, refreshDates);
-        
+           
+            addNewDate(temps, refreshDates);
+       
             // Regresar a la pantalla anterior
             
           };   
@@ -83,7 +90,7 @@ const ScrPrincipal=({route,navigation})=>{
                     </Button>
                 </View>
                 <View style={styles.bid}>
-                    <TouchableOpacity  onPress={handlerNewNote}>  
+                    <TouchableOpacity  onPress={ ()=>handlerNewNote()}>  
                                 <Text style={styles.btni}>Guardar</Text>
                     </TouchableOpacity>
                     <TouchableOpacity   >  
@@ -99,7 +106,7 @@ const ScrPrincipal=({route,navigation})=>{
                     
                         {   
                             isRunning?
-                            <TouchableOpacity >
+                            <TouchableOpacity onPress={handlertemps()}>
                             <Text style={styles.btni}>Vuelta</Text>
                             </TouchableOpacity>
                             :

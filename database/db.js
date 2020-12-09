@@ -29,18 +29,21 @@ const getDates = (setDatesFunc) => {
 
 // Insertar fechas
 const insertDates = (fecha, successFunc) => {
+ /* console.log(fecha +"fscdscvscvd");*/
   db.transaction(
     (tx) => {
-      tx.executeSql("insert into fecha (fecha) values (?)", [
-        "08.12.20",
+      tx.executeSql("insert into fecha (fecha,vuelta) values (?,?)", [
+        "4",fecha
       ]);
     },
     (_t, error) => {
       console.log("Error al insertar la fecha");
+      console.log(_t);
       console.log(error);
     },
     (_t, _success) => {
       successFunc;
+      console.log("secreo");
     }
   );
 };
@@ -69,7 +72,7 @@ const setupDatabaseTableAsync = async () => {
       db.transaction(
         (tx) => {
           tx.executeSql(
-            "create table if not exists fecha (PKfechaID integer primary key, fecha text not null);"
+            "create table if not exists fecha (PKfechaID integer primary key, fecha text not null,vuelta text not null);"
           );
         },
         (_t, error) => {
@@ -90,8 +93,8 @@ const setupDatesAsync = async () => {
   return new Promise((resolve, reject) => {
     db.transaction(
       (tx) => {
-        tx.executeSql("insert into fecha (PKfechaID,fecha) values (?,?)", [
-            "1","08.12.20",
+        tx.executeSql("insert into fecha (PKfechaID,fecha,vuelta) values (?,?,?)", [
+            "1","08.12.20", "25252"
         ]);
       },
       (_t, error) => {

@@ -29,7 +29,7 @@ const { width, height } = Dimensions.get("window");
 
 //Pantalla Principal
 const ScrPrincipal=({route,navigation})=>{
-    const { fecha } = useContext(DatesContext);
+    const { fecha,refreshDates} = useContext(DatesContext);
     //Variables
     
     const [estado, setestado] = useState(true)
@@ -53,9 +53,9 @@ const ScrPrincipal=({route,navigation})=>{
     }
 
     useEffect(()=>{
-       
+       refreshDates();
         
-    },[vuelta]);
+    },[]);
     
 
     //Pantalla Marcadores
@@ -68,12 +68,14 @@ const ScrPrincipal=({route,navigation})=>{
                 <Icon name="home" style={styles.icn}/>
             </TouchableOpacity>  
         </Header>
-        {console.log(fecha+"No hay")}
+       
         <List>
           {fecha
             ? fecha.map((fecha) => (
                 <ListItem key={fecha.PKfechaID.toString()}>
-                  <Text>{fecha.fecha.toString()}</Text>
+                    <Text>{fecha.PKfechaID.toString()}</Text>
+                    <Text>{`\t`}{fecha.fecha.toString()}</Text>
+                  <Text>{`\t`}{fecha.vuelta.toString()}</Text>
                 </ListItem>
               ))
             : <Text>No hay No existe</Text>}

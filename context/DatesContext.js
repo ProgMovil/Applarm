@@ -29,6 +29,7 @@ export const DatesContextProvider = (props) => {
   const datesContext = {
     fecha,
     addNewDate,
+    refreshDates
   };
 
   // Pasar los valores al proveedor y retornarlo
