@@ -27,20 +27,7 @@ const getDates = (setDatesFunc) => {
   });
 };
 
-// Insertar fechas fecha[fecha.length-1],fecha[0]
-/*  if (fecha.length==1){
-        tx.executeSql("insert into fecha (fecha,vuelta) values (?,?)", [
-          "2","2"
-        ]);
-          
-      }else{
-        for(let i = 0;i<fecha.length-1;i++){
-          tx.executeSql("insert into fecha (fecha,vuelta) values (?,?)", [
-            fecha[fecha.length-1],fecha[0]
-          ]);
-          
-        }
-      }*/
+
 const insertDates = (fecha, successFunc) => {
  const dato=fecha[0];
  const dato2=fecha[1];

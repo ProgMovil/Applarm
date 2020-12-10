@@ -1,5 +1,5 @@
 import React, { useEffect, useState ,Component,useContext, } from "react";
-import { StyleSheet, Text, Dimensions, Keyboard,Image, Alert} from "react-native";
+import { StyleSheet, Text, Dimensions, Keyboard,Image, Alert,ToastAndroid,Platform} from "react-native";
 import {
     Container,
     Header,
@@ -15,19 +15,16 @@ import {
     Left,
     H1,
     Toast,
+    List,
+    ListItem,
+  
 } from "native-base";
 import { color } from "react-native-reanimated";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { FlatList, ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { render } from "react-dom";
 import { useStopwatch } from 'react-timer-hook';
 import { DatesContext} from '../context/DatesContext'
 const { width, height } = Dimensions.get("window");
-export default class ToastDuration extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        showToast: false
-      };
 
 //Pantalla Principal
 const ScrPrincipal=({route,navigation})=>{
@@ -73,10 +70,20 @@ const ScrPrincipal=({route,navigation})=>{
         const datesContext = useContext(DatesContext);
         const { addNewDate, refreshDates } = datesContext;
         const [fecha,setfecha]=useState(null);
+        const poptoast = () => {
+            if (Platform.OS != 'android') {
+                Toast.show({
+                    text: 'Debe Iniciar Cronometro',
+                    duration: 1500
+                  });
+            } else {
+                ToastAndroid.show('Debe Iniciar Cronometro', ToastAndroid.SHORT);
+            }
+        };
         
         const handlertemps = () => {
            
-           temps.push(`${hours}h${minutes}m${seconds}s`);
+           temps.push(`${hours}h: ${minutes}m: ${seconds}s`);
             console.log(temps);
           
             // Regresar a la pantalla anterior
@@ -86,12 +93,8 @@ const ScrPrincipal=({route,navigation})=>{
            temps.push(`${hours}h:${minutes}m:${seconds}s`)
            console.log(temps[0]);
            if (temps[0]==="0h:0m:0s"){
-            {Toast.show({
-                text: "No hay Tiempos",
-                buttonText: "Okay",
-                duration: 3000
-              })}
-              errased();
+            poptoast();
+              errased()
            }else{
 
            
@@ -106,13 +109,14 @@ const ScrPrincipal=({route,navigation})=>{
                 addNewDate(data, refreshDates);
             }
         }
-            errased();
+            
+            errased()
             // Regresar a la pantalla anterior
     }
           };   
           const errased = () =>{
-              reset;
-              temps.length=0;
+              MyStopwatch.reset
+              true?temps.length=0:false
           }
           
         return (
@@ -126,13 +130,26 @@ const ScrPrincipal=({route,navigation})=>{
                     <TouchableOpacity  onPress={ ()=>isRunning?false:handlerNewDate()}>  
                                 <Text style={styles.btni}>Guardar</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity  onPress={()=>errased()} >  
+                    <TouchableOpacity  onPress={errased} >  
                                 <Text style={styles.btndc}>Cancelar</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.crono}>
                 <View style={styles.tmr}>
-                    <H2 style={styles.tmin}>{hours}h: {minutes}m: {seconds}s</H2>
+                    <View style={{flex:1/3,justifyContent:"center",}} >
+                    <H2 style={styles.tmin}>{hours}h: {minutes}m: {seconds}s</H2> 
+                    </View>
+                    <View style={{flex:1/3}}>
+                    <ScrollView >
+                     {temps
+                        ? temps.map((item) => (
+                            <View style={styles.vlseg} key={item.index}>
+                                <Text style={styles.tseg}>{`${item.toString()}`}</Text>
+                            </View>
+                        ))
+                        : null}
+                    </ScrollView>
+                    </View>           
                 </View>
                
                 <View style={styles.bid}>
@@ -198,8 +215,6 @@ const styles = StyleSheet.create({
         width:width,
         justifyContent:"center",
         backgroundColor:"#F0F0F0",
-     
-        
 
     },
     tmarca:{
@@ -213,14 +228,25 @@ const styles = StyleSheet.create({
         
     },
     tmin:{
-        paddingTop:20,
+        paddingTop:45,
         color:"#FC4D5D",
         fontSize:35,
     },
     tseg:{
+        textAlign:"center",
+        justifyContent:"center",
+        paddingTop:8,
         color:"#FC4D5D",
-        fontSize:60,
-        marginLeft:15,
+        fontSize:15,
+        borderColor:"#000",
+        borderRadius:15,
+        borderWidth:0.25,
+    },
+    vlseg:{
+        width:width/2,
+        justifyContent:"center",
+        alignContent:"center",
+        marginBottom:2
     },
     tcentseg:{
         color:"#000",
@@ -275,8 +301,9 @@ const styles = StyleSheet.create({
         textAlign:"center",
         color:"#fff",
         borderRadius:25,
-     }
+     },
 
 });
+    
 
 export default ScrPrincipal;
