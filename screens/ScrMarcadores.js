@@ -68,14 +68,13 @@ const ScrPrincipal=({route,navigation})=>{
                 <Icon name="home" style={styles.icn}/>
             </TouchableOpacity>  
         </Header>
-       
+      {console.log(fecha)}
         <List>
           {fecha
-            ? fecha.map((fecha) => (
-                <ListItem key={fecha.PKfechaID.toString()}>
-                    <Text>{fecha.PKfechaID.toString()}</Text>
-                    <Text>{`\t`}{fecha.fecha.toString()}</Text>
-                  <Text>{`\t`}{fecha.vuelta.toString()}</Text>
+            ? fecha.map((item) => (
+                <ListItem key={fecha.index}>
+                    <Text>{`\t`}{item.crono}</Text>
+                    <Text>{`\t`}{" Tiempo Total"}{item.total}</Text>
                 </ListItem>
               ))
             : <Text>No hay No existe</Text>}

@@ -69,18 +69,27 @@ const ScrPrincipal=({route,navigation})=>{
         } = useStopwatch({ autoStart: false });
         const datesContext = useContext(DatesContext);
         const { addNewDate, refreshDates } = datesContext;
-        const [fecha,setfecha]=useState(null);
         const poptoast = () => {
             if (Platform.OS != 'android') {
                 Toast.show({
-                    text: 'Debe Iniciar Cronometro',
+                    text: 'Debe iniciar cronometro',
                     duration: 1500
                   });
             } else {
-                ToastAndroid.show('Debe Iniciar Cronometro', ToastAndroid.SHORT);
+                ToastAndroid.show('Debe iniciar cronometro', ToastAndroid.SHORT);
             }
         };
-        
+        const poptoast2 = () => {
+            if (Platform.OS != 'android') {
+                Toast.show({
+                    text: 'Debe pausar para guardar',
+                    duration: 1500
+                  });
+            } else {
+                ToastAndroid.show('Debe pausar para guardar', ToastAndroid.SHORT);
+            }
+        };
+        const fecha = new Date();
         const handlertemps = () => {
            
            temps.push(`${hours}h: ${minutes}m: ${seconds}s`);
@@ -90,32 +99,38 @@ const ScrPrincipal=({route,navigation})=>{
             
           };  
         const handlerNewDate = () => {
+            console.log("newDate")
            temps.push(`${hours}h:${minutes}m:${seconds}s`)
            console.log(temps[0]);
            if (temps[0]==="0h:0m:0s"){
             poptoast();
               errased()
            }else{
+            let varf=(fecha+"")
+            let subf=varf.substring(0,25)
+            console.log(subf)
+           temps.push(subf)
 
-           
-           if(temps.length==1){
-            let data=[temps[0],temps[0]];
+           if(temps.length==2){
+            let data=[temps[1],temps[0],temps[1]];
             addNewDate(data, refreshDates);
            }else{
 
            
-            for(let i=0;i<temps.length-1;i++){
-                let data=[temps[temps.length-1],temps[i]];
-                addNewDate(data, refreshDates);
+                for(let i=0;i<temps.length-2;i++){
+                    let data=[temps[temps.length-1],temps[temps.length-2],temps[i]];
+                    console.log(data)
+                    addNewDate(data, refreshDates);
+                }
             }
-        }
-            
+                
+               
+                // Regresar a la pantalla anterior
+            }
             errased()
-            // Regresar a la pantalla anterior
-    }
           };   
           const errased = () =>{
-              MyStopwatch.reset
+                reset()
               true?temps.length=0:false
           }
           
@@ -127,10 +142,10 @@ const ScrPrincipal=({route,navigation})=>{
                     </Button>
                 </View>
                 <View style={styles.bid}>
-                    <TouchableOpacity  onPress={ ()=>isRunning?false:handlerNewDate()}>  
+                    <TouchableOpacity  onPress={ ()=>   (isRunning?poptoast2():handlerNewDate())}>  
                                 <Text style={styles.btni}>Guardar</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity  onPress={errased} >  
+                    <TouchableOpacity  onPress={()=>errased()} >  
                                 <Text style={styles.btndc}>Cancelar</Text>
                     </TouchableOpacity>
                 </View>
@@ -143,7 +158,7 @@ const ScrPrincipal=({route,navigation})=>{
                     <ScrollView >
                      {temps
                         ? temps.map((item) => (
-                            <View style={styles.vlseg} key={item.index}>
+                            <View style={styles.vlseg} key={temps.index}>
                                 <Text style={styles.tseg}>{`${item.toString()}`}</Text>
                             </View>
                         ))

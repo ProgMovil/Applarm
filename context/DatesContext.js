@@ -18,7 +18,7 @@ export const DatesContextProvider = (props) => {
   }, []);
 
   const refreshDates = () => {
-    return database.getDates(setDates);
+    return database.getDates2(setDates);
   };
 
   const addNewDate = (fecha) => {
