@@ -14,6 +14,7 @@ import {
     H3,
     Left,
     H1,
+    Toast,
 } from "native-base";
 import { color } from "react-native-reanimated";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -21,6 +22,12 @@ import { render } from "react-dom";
 import { useStopwatch } from 'react-timer-hook';
 import { DatesContext} from '../context/DatesContext'
 const { width, height } = Dimensions.get("window");
+export default class ToastDuration extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        showToast: false
+      };
 
 //Pantalla Principal
 const ScrPrincipal=({route,navigation})=>{
@@ -51,7 +58,7 @@ const ScrPrincipal=({route,navigation})=>{
         
     },[vlt]);
        
- 
+    const temps=[];
     function MyStopwatch() {
         const {
           seconds,
@@ -66,21 +73,47 @@ const ScrPrincipal=({route,navigation})=>{
         const datesContext = useContext(DatesContext);
         const { addNewDate, refreshDates } = datesContext;
         const [fecha,setfecha]=useState(null);
-        const temps=[];
+        
         const handlertemps = () => {
            
-           temps.push((`${hours}s${minutes}m${seconds}s`))
+           temps.push(`${hours}h${minutes}m${seconds}s`);
             console.log(temps);
+          
             // Regresar a la pantalla anterior
             
           };  
-        const handlerNewNote = () => {
+        const handlerNewDate = () => {
+           temps.push(`${hours}h:${minutes}m:${seconds}s`)
+           console.log(temps[0]);
+           if (temps[0]==="0h:0m:0s"){
+            {Toast.show({
+                text: "No hay Tiempos",
+                buttonText: "Okay",
+                duration: 3000
+              })}
+              errased();
+           }else{
+
            
-            addNewDate(temps, refreshDates);
-       
+           if(temps.length==1){
+            let data=[temps[0],temps[0]];
+            addNewDate(data, refreshDates);
+           }else{
+
+           
+            for(let i=0;i<temps.length-1;i++){
+                let data=[temps[temps.length-1],temps[i]];
+                addNewDate(data, refreshDates);
+            }
+        }
+            errased();
             // Regresar a la pantalla anterior
-            
+    }
           };   
+          const errased = () =>{
+              reset;
+              temps.length=0;
+          }
           
         return (
             <Container>
@@ -90,10 +123,10 @@ const ScrPrincipal=({route,navigation})=>{
                     </Button>
                 </View>
                 <View style={styles.bid}>
-                    <TouchableOpacity  onPress={ ()=>handlerNewNote()}>  
+                    <TouchableOpacity  onPress={ ()=>isRunning?false:handlerNewDate()}>  
                                 <Text style={styles.btni}>Guardar</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity   >  
+                    <TouchableOpacity  onPress={()=>errased()} >  
                                 <Text style={styles.btndc}>Cancelar</Text>
                     </TouchableOpacity>
                 </View>
@@ -106,7 +139,7 @@ const ScrPrincipal=({route,navigation})=>{
                     
                         {   
                             isRunning?
-                            <TouchableOpacity onPress={handlertemps()}>
+                            <TouchableOpacity onPress={()=>handlertemps()}>
                             <Text style={styles.btni}>Vuelta</Text>
                             </TouchableOpacity>
                             :

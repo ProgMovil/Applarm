@@ -27,25 +27,40 @@ const getDates = (setDatesFunc) => {
   });
 };
 
-// Insertar fechas
+// Insertar fechas fecha[fecha.length-1],fecha[0]
+/*  if (fecha.length==1){
+        tx.executeSql("insert into fecha (fecha,vuelta) values (?,?)", [
+          "2","2"
+        ]);
+          
+      }else{
+        for(let i = 0;i<fecha.length-1;i++){
+          tx.executeSql("insert into fecha (fecha,vuelta) values (?,?)", [
+            fecha[fecha.length-1],fecha[0]
+          ]);
+          
+        }
+      }*/
 const insertDates = (fecha, successFunc) => {
- /* console.log(fecha +"fscdscvscvd");*/
-  db.transaction(
-    (tx) => {
-      tx.executeSql("insert into fecha (fecha,vuelta) values (?,?)", [
-        "4",fecha
-      ]);
-    },
-    (_t, error) => {
-      console.log("Error al insertar la fecha");
-      console.log(_t);
-      console.log(error);
-    },
-    (_t, _success) => {
-      successFunc;
-      console.log("secreo");
-    }
-  );
+ const dato=fecha[0];
+ const dato2=fecha[1];
+ db.transaction(
+  (tx) => {
+    tx.executeSql("insert into fecha (fecha,vuelta) values (?,?)", [
+      dato,dato2
+    ]);
+  },
+  (_t, error) => {
+    console.log("Error al insertar la fecha");
+    console.log(_t);
+    console.log(error);
+  },
+  (_t, _success) => {
+    successFunc;
+    console.log("secreo");
+  }
+);
+  
 };
 
 // Borrar la base de datos
@@ -72,7 +87,7 @@ const setupDatabaseTableAsync = async () => {
       db.transaction(
         (tx) => {
           tx.executeSql(
-            "create table if not exists fecha (PKfechaID integer primary key, fecha text not null,vuelta text not null);"
+            "create table if not exists fecha (PKfechaID integer primary key, fecha text not null, vuelta text not null);"
           );
         },
         (_t, error) => {
