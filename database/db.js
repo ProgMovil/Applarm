@@ -26,15 +26,32 @@ const getDates = (setDatesFunc) => {
     );
   });
 };
-
-const getInfo = (id) => {
+const eraseInfo = (id,successFunc) => {
+    db.transaction(
+      (tx) => {
+        tx.executeSql("delete from fecha where fecha = ?", [
+          id
+        ]);
+      },
+      (_t, error) => {
+        console.log("No se pudo borrar");
+        console.log(_t);
+        console.log(error);
+      },
+      (_t, _success) => {
+        successFunc;
+        console.log("Borrado con exito");
+      }
+    );
+};
+const getInfo = (id,setdate) => {
   db.transaction((tx) => {
     tx.executeSql(
       "select * from fecha where fecha=?",
       [id],
       (_, { rows: { _array } }) => {
-   
-        return _array;
+       /* console.log(_array);*/
+        setdate( _array);
 
       },
       (_t, error) => {
@@ -67,6 +84,7 @@ const getDates2 = (setDatesFunc) => {
     );
   });
 };
+
 
 
 const insertDates = (fecha, successFunc) => {
@@ -158,6 +176,7 @@ export const database = {
   getDates,
   getDates2,
   getInfo,
+  eraseInfo,
   insertDates,
   dropDatabaseTableAsync,
   setupDatabaseTableAsync,

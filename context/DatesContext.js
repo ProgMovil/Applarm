@@ -16,9 +16,16 @@ export const DatesContextProvider = (props) => {
   useEffect(() => {
     refreshDates();
   }, []);
+
+  const borrarfecha=(id)=>{
+    return database.eraseInfo(id);
+  }
+
   const lookDates = (id) => {
-    console.log( database.getInfo(id));
-    /*console.log(vuelta);*/
+   
+     
+     return database.getInfo(id,setvuelta);
+    
   };
   const refreshDates = () => {
     return database.getDates2(setDates);
@@ -34,7 +41,8 @@ export const DatesContextProvider = (props) => {
     vuelta,
     addNewDate,
     refreshDates,
-    lookDates
+    lookDates,
+    borrarfecha
   };
 
   // Pasar los valores al proveedor y retornarlo

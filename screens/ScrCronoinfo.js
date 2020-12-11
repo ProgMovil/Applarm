@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { StyleSheet, Text, Dimensions, Keyboard,Image} from "react-native";
+import { StyleSheet, Text, Dimensions, Keyboard,Image, Alert} from "react-native";
 import {
     Container,
     Header,
@@ -18,19 +18,19 @@ import {
     List,
     ListItem,
     CardItem,
-    
+    Spinner,
 } from "native-base";
 import { color } from "react-native-reanimated";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 
-import { DatesContext } from "../context/DatesContext";
+import { vuelta,DatesContext } from "../context/DatesContext";
 
 
 const { width, height } = Dimensions.get("window");
 
 //Pantalla Principal
 const ScrCronoinfo=({route,navigation})=>{
-    const { fecha,refreshDates,lookDates,vuelta} = useContext(DatesContext);
+    const { fecha,refreshDates,lookDates,vuelta,borrarfecha} = useContext(DatesContext);
     //Variables
     
     //console.log(route.params.params.id);
@@ -40,25 +40,84 @@ const ScrCronoinfo=({route,navigation})=>{
         setVuelta(vlt);
        
     }
-0
+   
    const id = route.params.params.id
    const [data,setdata]=useState(null)
    useEffect(()=>{
-    const cro=lookDates(id);
-     //console.log(cro)
+      lookDates(id);
+     console.log(vuelta)
  },[]);
 
+      const borrar =() =>{
+        // Works on both Android and iOS
+          Alert.alert(
+            'Borrar',
+            '¿Esta seguro de borrar el registro?',
+            [
+              {
+                text: 'No',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel'
+              },
+              { text: 'Si', onPress: () => (borrarfecha(id),navigation.navigate('Marcadores', {params:true})) }
+            ],
+            { cancelable: true }
+          );
+      }
     //Pantalla Marcadores
+    if(!vuelta){
+      return (
+        <Content >
+        <Spinner color="#FC4D5D" />
+      </Content>
+    )
+    }
   return( 
     <Container>
       <Content style={{backgroundColor:"#F0F0F0"}}>
       <Header searchBar rounded style={styles.header} androidStatusBarColor="#000">
             <H1 style={styles.Titulo}>Informacion</H1>
+            <TouchableOpacity onPress={() => true? (borrar()):false}>
+                <Icon name="trash" style={styles.icn}/>
+            </TouchableOpacity> 
             <TouchableOpacity onPress={() => navigation.navigate('Principal')} >
                 <Icon name="home" style={styles.icn}/>
             </TouchableOpacity>  
         </Header>
-            <Text>No hay Vueltas</Text>
+
+          <View style={{flex:1,}}>
+          {vuelta
+            ?
+             <View >
+              <View style={styles.textos}>
+              <H1 style={styles.txttot}>{vuelta[0].fecha}</H1>
+              <H1 style={styles.txttot}>{"Vuelta Total "}{vuelta[0].total}</H1>
+              </View>
+            <ScrollView >
+            {vuelta.map((item,index) => (
+                <View key={index}>
+                  {
+                    index%2==0?
+                  <Card style={styles.crd2} >
+                    <CardItem style={styles.crd2}>
+                     <Text style={styles.txtc}>{" Vuelta "}{index+1}{`\t`}{item.vuelta}</Text>
+                    </CardItem>
+                  </Card>
+                  :
+                  <Card style={styles.crdi} >
+                    <CardItem style={styles.crdi}>
+                      <Text style={styles.txtc}>{" Vuelta "}{index+1}{`\t`}{item.vuelta}</Text>
+                    </CardItem>
+                  </Card>
+                }
+                </View>
+                
+                
+              ))}
+              </ScrollView>
+              </View>
+            : <Text>No hay Vueltas</Text>}
+            </View>
       </Content>
     </Container>
 
@@ -92,12 +151,26 @@ const styles = StyleSheet.create({
     },
     crdi:{
       margin:0,
-     
-      borderRadius:25,
+      borderBottomRightRadius:25,
+      borderBottomLeftRadius:25,
     },
-    crd:{
-      borderRadius:25
-        
+    crd2:{
+      borderTopRightRadius:25,
+      borderTopLeftRadius:25,
+    },
+    textos:{
+      flex:1/2,
+      margin:5,
+      backgroundColor:"#fff",
+      justifyContent:"center",
+      alignItems:"center",
+      borderBottomRightRadius:25,
+      borderBottomLeftRadius:25,
+    },
+    txttot:{
+      paddingTop:15,
+        color:"#FC4D5D",
+        fontSize:25,
     },
 });
 

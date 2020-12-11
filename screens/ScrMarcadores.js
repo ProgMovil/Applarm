@@ -18,6 +18,7 @@ import {
     List,
     ListItem,
     CardItem,
+    Spinner,
     
 } from "native-base";
 import { color } from "react-native-reanimated";
@@ -32,6 +33,10 @@ const { width, height } = Dimensions.get("window");
 const ScrMarcadores=({route,navigation})=>{
     const { fecha,refreshDates} = useContext(DatesContext);
     //Variables
+    if(route.params){
+      refreshDates();
+  }
+  
     
     const [estado, setestado] = useState(true)
     const [vuelta,setVuelta]=useState(true)
@@ -52,13 +57,19 @@ const ScrMarcadores=({route,navigation})=>{
         setVuelta(vlt);
        
     }
-
+    
     useEffect(()=>{
        refreshDates();
         
     },[]);
     
-
+    if(!fecha){
+      return (
+        <Content >
+        <Spinner color="blue" />
+      </Content>
+    )
+    }
     //Pantalla Marcadores
   return( 
     <Container>
