@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as SQLite from "expo-sqlite";
 
 // https://docs.expo.io/versions/latest/sdk/sqlite/
@@ -26,6 +26,29 @@ const getDates = (setDatesFunc) => {
     );
   });
 };
+
+const getInfo = (id) => {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select * from fecha where fecha=?",
+      [id],
+      (_, { rows: { _array } }) => {
+   
+        return _array;
+
+      },
+      (_t, error) => {
+        console.log("Error al momento de obtener los fecha por id");
+        console.log(error);
+      },
+      (_t, _success) => {
+        console.log("Fechas obtenidas");
+      }
+    );
+  });
+};
+
+
 const getDates2 = (setDatesFunc) => {
   db.transaction((tx) => {
     tx.executeSql(
@@ -134,6 +157,7 @@ const setupDatesAsync = async () => {
 export const database = {
   getDates,
   getDates2,
+  getInfo,
   insertDates,
   dropDatabaseTableAsync,
   setupDatabaseTableAsync,

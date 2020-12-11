@@ -30,34 +30,23 @@ const { width, height } = Dimensions.get("window");
 
 //Pantalla Principal
 const ScrCronoinfo=({route,navigation})=>{
-    const { fecha,refreshDates} = useContext(DatesContext);
+    const { fecha,refreshDates,lookDates,vuelta} = useContext(DatesContext);
     //Variables
     
-    const [estado, setestado] = useState(true)
-    const [vuelta,setVuelta]=useState(true)
-    const [stop,setstop]=useState(false)
-    let status;
-    let vlt;
-    let dtn;
-    const changeStatus= ()=>{
-     dtn=!stop;
-     setstop(dtn);
-     status=!estado;
-     setestado(status);
-     
-    }
+    //console.log(route.params.params.id);
     
     const changevuelta =()=>{
         vlt=!vuelta;
         setVuelta(vlt);
        
     }
-
-    useEffect(()=>{
-       refreshDates();
-        
-    },[]);
-    
+0
+   const id = route.params.params.id
+   const [data,setdata]=useState(null)
+   useEffect(()=>{
+    const cro=lookDates(id);
+     //console.log(cro)
+ },[]);
 
     //Pantalla Marcadores
   return( 

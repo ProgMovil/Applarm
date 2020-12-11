@@ -69,12 +69,12 @@ const ScrMarcadores=({route,navigation})=>{
                 <Icon name="home" style={styles.icn}/>
             </TouchableOpacity>  
         </Header>
-      {console.log(fecha)}
+    
         <ScrollView >
           {fecha
             ? fecha.map((item,index) => (
-              <TouchableOpacity onPress={() => navigation.navigate('Cronoinfo', { params:{id:item.crono}})}>
-                <Card style={styles.crd} key={index}>
+              <TouchableOpacity key={index} onPress={() => navigation.navigate('Cronoinfo', { params:{id:item.crono}})}>
+                <Card style={styles.crd} >
                   <CardItem style={styles.crdi}>
                     <Text style={styles.txtc}>{`\t`}{item.crono}</Text>
                     <Text style={styles.txtc}>{`\t`}{" Tiempo Total: "}{item.total}</Text>

@@ -11,12 +11,15 @@ export const DatesContextProvider = (props) => {
 
   // Almacenar los valores en el estado
   const [fecha, setDates] = useState(initialdates);
-
+  const [vuelta ,setvuelta] = useState()
   // Cargar u obtener las notas
   useEffect(() => {
     refreshDates();
   }, []);
-
+  const lookDates = (id) => {
+    console.log( database.getInfo(id));
+    /*console.log(vuelta);*/
+  };
   const refreshDates = () => {
     return database.getDates2(setDates);
   };
@@ -28,8 +31,10 @@ export const DatesContextProvider = (props) => {
   // Crear el objeto de contexto
   const datesContext = {
     fecha,
+    vuelta,
     addNewDate,
-    refreshDates
+    refreshDates,
+    lookDates
   };
 
   // Pasar los valores al proveedor y retornarlo
