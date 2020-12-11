@@ -115,7 +115,7 @@ const setupDatesAsync = async () => {
     db.transaction(
       (tx) => {
         tx.executeSql("insert into fecha (PKfechaID,fecha,total,vuelta) values (?,?,?,?)", [
-            "1","fecha", "25252","vuelta"
+            "1","Fecha", "25252","vuelta"
         ]);
       },
       (_t, error) => {

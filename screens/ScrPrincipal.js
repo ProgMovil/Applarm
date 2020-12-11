@@ -151,15 +151,15 @@ const ScrPrincipal=({route,navigation})=>{
                 </View>
                 <View style={styles.crono}>
                 <View style={styles.tmr}>
-                    <View style={{flex:1/3,justifyContent:"center",}} >
+                    <View style={{flex:1/2,justifyContent:"center",}} >
                     <H2 style={styles.tmin}>{hours}h: {minutes}m: {seconds}s</H2> 
                     </View>
-                    <View style={{flex:1/3}}>
+                    <View style={{width:width,height:height*0.30,justifyContent:"center",marginBottom:height*-0.01}}>
                     <ScrollView >
                      {temps
-                        ? temps.map((item) => (
-                            <View style={styles.vlseg} key={temps.index}>
-                                <Text style={styles.tseg}>{`${item.toString()}`}</Text>
+                        ? temps.map((item,index) => (
+                            <View style={styles.vlseg} key={index}>
+                                <Text style={styles.tseg}>{`Vuelta:${index+1} ${item.toString()}`}</Text>
                             </View>
                         ))
                         : null}
@@ -252,13 +252,11 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         paddingTop:8,
         color:"#FC4D5D",
-        fontSize:15,
-        borderColor:"#000",
-        borderRadius:15,
-        borderWidth:0.25,
+        fontSize:20,
+        
     },
     vlseg:{
-        width:width/2,
+       
         justifyContent:"center",
         alignContent:"center",
         marginBottom:2

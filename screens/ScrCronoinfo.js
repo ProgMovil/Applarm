@@ -29,7 +29,7 @@ import { DatesContext } from "../context/DatesContext";
 const { width, height } = Dimensions.get("window");
 
 //Pantalla Principal
-const ScrMarcadores=({route,navigation})=>{
+const ScrCronoinfo=({route,navigation})=>{
     const { fecha,refreshDates} = useContext(DatesContext);
     //Variables
     
@@ -64,28 +64,12 @@ const ScrMarcadores=({route,navigation})=>{
     <Container>
       <Content style={{backgroundColor:"#F0F0F0"}}>
       <Header searchBar rounded style={styles.header} androidStatusBarColor="#000">
-            <H1 style={styles.Titulo}>Marcadores</H1>
+            <H1 style={styles.Titulo}>Informacion</H1>
             <TouchableOpacity onPress={() => navigation.navigate('Principal')} >
                 <Icon name="home" style={styles.icn}/>
             </TouchableOpacity>  
         </Header>
-      {console.log(fecha)}
-        <ScrollView >
-          {fecha
-            ? fecha.map((item,index) => (
-              <TouchableOpacity onPress={() => navigation.navigate('Cronoinfo', { params:{id:item.crono}})}>
-                <Card style={styles.crd} key={index}>
-                  <CardItem style={styles.crdi}>
-                    <Text style={styles.txtc}>{`\t`}{item.crono}</Text>
-                    <Text style={styles.txtc}>{`\t`}{" Tiempo Total: "}{item.total}</Text>
-                  </CardItem>
-                </Card>
-              </TouchableOpacity>
-                
-              ))
-            : <Text>No hay Vueltas</Text>}
-        </ScrollView>
-       
+            <Text>No hay Vueltas</Text>
       </Content>
     </Container>
 
@@ -128,4 +112,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ScrMarcadores;
+export default ScrCronoinfo;
