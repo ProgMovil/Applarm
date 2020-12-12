@@ -31,11 +31,9 @@ const { width, height } = Dimensions.get("window");
 
 //Pantalla Principal
 const ScrMarcadores=({route,navigation})=>{
-    const { fecha,refreshDates} = useContext(DatesContext);
+    const { fecha,refreshDates,vltnull} = useContext(DatesContext);
     //Variables
-    if(route.params){
-      refreshDates();
-  }
+    
   
     
     const [estado, setestado] = useState(true)
@@ -59,21 +57,22 @@ const ScrMarcadores=({route,navigation})=>{
     }
     
     useEffect(()=>{
+      vltnull();
        refreshDates();
-        
+
     },[]);
     
     if(!fecha){
       return (
-        <Content >
-        <Spinner color="blue" />
-      </Content>
+        <View style={{flex:1,justifyContent:"center",alignContent:"center"}}>
+          <Spinner color="#FC4D5D" />
+        </View>  
     )
     }
     //Pantalla Marcadores
   return( 
     <Container>
-      <Content style={{backgroundColor:"#F0F0F0"}}>
+      <Content style={{backgroundColor:"#C6C6C6"}}>
       <Header searchBar rounded style={styles.header} androidStatusBarColor="#000">
             <H1 style={styles.Titulo}>Marcadores</H1>
             <TouchableOpacity onPress={() => navigation.navigate('Principal')} >
@@ -85,7 +84,7 @@ const ScrMarcadores=({route,navigation})=>{
           {fecha
             ? fecha.map((item,index) => (
               <TouchableOpacity key={index} onPress={() => navigation.navigate('Cronoinfo', { params:{id:item.crono}})}>
-                <Card style={styles.crd} >
+                <Card style={styles.crdi} >
                   <CardItem style={styles.crdi}>
                     <Text style={styles.txtc}>{`\t`}{item.crono}</Text>
                     <Text style={styles.txtc}>{`\t`}{" Tiempo Total: "}{item.total}</Text>
@@ -129,12 +128,13 @@ const styles = StyleSheet.create({
       color:"#FC4D5D",
     },
     crdi:{
-      margin:0,
-     
-      borderRadius:25,
+      margin:1,
+      borderBottomRightRadius:25,
+      borderTopLeftRadius:25,
     },
     crd:{
-      borderRadius:25
+      
+      borderRadius:10
         
     },
 });

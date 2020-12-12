@@ -30,7 +30,7 @@ const { width, height } = Dimensions.get("window");
 
 //Pantalla Principal
 const ScrCronoinfo=({route,navigation})=>{
-    const { fecha,refreshDates,lookDates,vuelta,borrarfecha} = useContext(DatesContext);
+    const { fecha,refreshDates,lookDates,vuelta,borrarfecha,vltnull} = useContext(DatesContext);
     //Variables
     
     //console.log(route.params.params.id);
@@ -59,7 +59,7 @@ const ScrCronoinfo=({route,navigation})=>{
                 onPress: () => console.log('Cancel Pressed'),
                 style: 'cancel'
               },
-              { text: 'Si', onPress: () => (borrarfecha(id),navigation.navigate('Marcadores', {params:true})) }
+              { text: 'Si', onPress: () => (borrarfecha(id),vltnull(),navigation.navigate('Marcadores')) }
             ],
             { cancelable: true }
           );
@@ -67,20 +67,20 @@ const ScrCronoinfo=({route,navigation})=>{
     //Pantalla Marcadores
     if(!vuelta){
       return (
-        <Content >
-        <Spinner color="#FC4D5D" />
-      </Content>
+        <View style={{flex:1,justifyContent:"center",alignContent:"center"}}>
+          <Spinner color="#FC4D5D" />
+        </View>  
     )
     }
   return( 
     <Container>
-      <Content style={{backgroundColor:"#F0F0F0"}}>
+      <Content style={{backgroundColor:"#C6C6C6"}}>
       <Header searchBar rounded style={styles.header} androidStatusBarColor="#000">
             <H1 style={styles.Titulo}>Informacion</H1>
             <TouchableOpacity onPress={() => true? (borrar()):false}>
                 <Icon name="trash" style={styles.icn}/>
             </TouchableOpacity> 
-            <TouchableOpacity onPress={() => navigation.navigate('Principal')} >
+            <TouchableOpacity onPress={() => navigation.navigate('Marcadores')} >
                 <Icon name="home" style={styles.icn}/>
             </TouchableOpacity>  
         </Header>
@@ -100,13 +100,13 @@ const ScrCronoinfo=({route,navigation})=>{
                     index%2==0?
                   <Card style={styles.crd2} >
                     <CardItem style={styles.crd2}>
-                     <Text style={styles.txtc}>{" Vuelta "}{index+1}{`\t`}{item.vuelta}</Text>
+                     <Text style={styles.txtc}>{" Vuelta "}{index+1}{`\t`}{`\t`}{item.vuelta}</Text>
                     </CardItem>
                   </Card>
                   :
                   <Card style={styles.crdi} >
                     <CardItem style={styles.crdi}>
-                      <Text style={styles.txtc}>{" Vuelta "}{index+1}{`\t`}{item.vuelta}</Text>
+                      <Text style={styles.txtc}>{" Vuelta "}{index+1}{`\t`}{`\t`}{item.vuelta}</Text>
                     </CardItem>
                   </Card>
                 }
@@ -150,22 +150,27 @@ const styles = StyleSheet.create({
       color:"#FC4D5D",
     },
     crdi:{
-      margin:0,
-      borderBottomRightRadius:25,
+      
+      justifyContent:"center",
+      alignItems:"center",
       borderBottomLeftRadius:25,
     },
     crd2:{
+      marginTop:5,
+      justifyContent:"center",
+      alignItems:"center",
       borderTopRightRadius:25,
-      borderTopLeftRadius:25,
+     
     },
     textos:{
       flex:1/2,
-      margin:5,
-      backgroundColor:"#fff",
+      
+      backgroundColor:"#F9F9F9",
       justifyContent:"center",
       alignItems:"center",
       borderBottomRightRadius:25,
       borderBottomLeftRadius:25,
+      
     },
     txttot:{
       paddingTop:15,

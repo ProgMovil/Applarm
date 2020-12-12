@@ -136,7 +136,7 @@ const ScrPrincipal=({route,navigation})=>{
           
         return (
             <Container>
-                <View style={{backgroundColor:"#D0C7C7"}}>
+                <View style={{backgroundColor:"#C6C6C6"}}>
                     <Button style={styles.bmarca} onPress={()=> isRunning?false:navigation.navigate("Marcadores")}>
                         <Text style={styles.tmarca}>Marcadores</Text>
                     </Button>
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     },
     header:{
         backgroundColor:"#F9F9F9",
-        justifyContent:"flex-start",
+        justifyContent:"center",
         alignItems:"center"
     },
     Titulo:{
@@ -230,6 +230,7 @@ const styles = StyleSheet.create({
         width:width,
         justifyContent:"center",
         backgroundColor:"#F0F0F0",
+        
 
     },
     tmarca:{
@@ -273,13 +274,13 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignContent:"center",
         alignItems:"center",
-        borderBottomRightRadius:25,
-        borderBottomLeftRadius:25,
+        borderBottomRightRadius:45,
+        borderBottomLeftRadius:45,
         
     },
     bid:{
         flex:1/8,
-        backgroundColor:"#D0C7C7",
+        backgroundColor:"#C6C6C6",
         flexDirection:"row",
         justifyContent:"space-evenly",
         alignItems:"center",
@@ -294,7 +295,9 @@ const styles = StyleSheet.create({
        alignItems:"center",
        textAlign:"center",
        color:"#fff",
-       borderRadius:25,
+       
+       borderTopLeftRadius:10,
+       borderBottomRightRadius:10,
     },
     btndc:{
         padding:5,
@@ -304,7 +307,10 @@ const styles = StyleSheet.create({
         alignItems:"center",
         textAlign:"center",
         color:"#fff",
-        borderRadius:25,
+        borderBottomLeftRadius:10,
+       borderTopRightRadius:10,
+       
+       
     },
     prueba:{
         backgroundColor:"#f1f",

@@ -20,7 +20,9 @@ export const DatesContextProvider = (props) => {
   const borrarfecha=(id)=>{
     return database.eraseInfo(id);
   }
-
+const vltnull = () =>{
+   return setvuelta("");
+}
   const lookDates = (id) => {
    
      
@@ -42,7 +44,8 @@ export const DatesContextProvider = (props) => {
     addNewDate,
     refreshDates,
     lookDates,
-    borrarfecha
+    borrarfecha,
+    vltnull
   };
 
   // Pasar los valores al proveedor y retornarlo
