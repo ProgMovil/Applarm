@@ -67,8 +67,8 @@ const ScrCronoinfo=({route,navigation})=>{
     //Pantalla Marcadores
     if(!vuelta){
       return (
-        <View style={{flex:1,justifyContent:"center",alignContent:"center"}}>
-          <Spinner color="#FC4D5D" />
+        <View style={{backgroundColor:"#ffffff",flex:1,justifyContent:"center",alignContent:"center"}}>
+          <Image source={require("../assets/giphy.gif")} style = {{height:400,width:width}}/>
         </View>  
     )
     }

@@ -64,8 +64,8 @@ const ScrMarcadores=({route,navigation})=>{
     
     if(!fecha){
       return (
-        <View style={{flex:1,justifyContent:"center",alignContent:"center"}}>
-          <Spinner color="#FC4D5D" />
+        <View style={{backgroundColor:"#ffffff",flex:1,justifyContent:"center",alignContent:"center"}}>
+          <Image source={require("../assets/giphy.gif")} style = {{height:400,width:width}}/>
         </View>  
     )
     }
