@@ -59,7 +59,7 @@ const ScrCronoinfo=({route,navigation})=>{
                 onPress: () => console.log('Cancel Pressed'),
                 style: 'cancel'
               },
-              { text: 'Si', onPress: () => (borrarfecha(id),vltnull(),navigation.navigate('Marcadores')) }
+              { text: 'Si', onPress: () => (borrarfecha(id),vltnull(),navigation.navigate('Marcadores',{ params:1})) }
             ],
             { cancelable: true }
           );
@@ -80,7 +80,7 @@ const ScrCronoinfo=({route,navigation})=>{
             <TouchableOpacity onPress={() => true? (borrar()):false}>
                 <Icon name="trash" style={styles.icn}/>
             </TouchableOpacity> 
-            <TouchableOpacity onPress={() => navigation.navigate('Marcadores')} >
+            <TouchableOpacity onPress={() => navigation.navigate('Marcadores',{ params:1})} >
                 <Icon name="home" style={styles.icn}/>
             </TouchableOpacity>  
         </Header>

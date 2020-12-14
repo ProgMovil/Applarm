@@ -33,7 +33,11 @@ const { width, height } = Dimensions.get("window");
 const ScrMarcadores=({route,navigation})=>{
     const { fecha,refreshDates,vltnull} = useContext(DatesContext);
     //Variables
-    
+    if(!route.params){
+      refreshDates();
+  }else{
+     refreshDates();
+  }
   
     
     const [estado, setestado] = useState(true)
