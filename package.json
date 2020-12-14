@@ -23,7 +23,8 @@
     "react-native-screens": "^2.10.1",
     "react-native-web": "~0.13.12",
     "react-timer-hook": "^2.0.6",
-    "expo-sqlite": "~8.4.0"
+    "expo-sqlite": "~8.4.0",
+    "expo-splash-screen": "~0.6.2"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"

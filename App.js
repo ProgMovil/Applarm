@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet} from 'react-native';
+import { StyleSheet, Image, Dimensions } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import ScrPrincipal from './screens/ScrPrincipal';
@@ -10,13 +10,20 @@ import {DatesContextProvider} from "./context/DatesContext";
 import { View,Text } from 'native-base';
 
 
+const { width, height } = Dimensions.get("window");
+
 const Stack = createStackNavigator();
 
 export default function App() {
+
+  const img = [require('./assets/giphy.gif')];
+
   const isloadingComplete = useDatabase();
   if(!isloadingComplete){
     return(
-      <Text>No</Text>
+      <View style={{backgroundColor:"#ffffff",flex:1,justifyContent:"center",alignContent:"center"}}>
+      <Image source={require('./assets/giphy.gif')} style = {{height:400,width:width}}/>
+    </View>  
     );
     
   }else{
