@@ -85,7 +85,7 @@ const ScrMarcadores=({route,navigation})=>{
                 <Card style={styles.crdi} >
                   <CardItem style={styles.crdi}>
                     <Text style={styles.txtc}>{`\t`}{item.crono}</Text>
-                    <Text style={styles.txtc}>{`\t`}{" Tiempo Total: "}{item.total}</Text>
+                    <Text style={styles.txtc}>{`\t`}{"Tiempo Total: "}{item.total}</Text>
                   </CardItem>
                 </Card>
               </TouchableOpacity>
