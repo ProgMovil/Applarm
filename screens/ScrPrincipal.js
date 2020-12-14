@@ -159,7 +159,7 @@ const ScrPrincipal=({route,navigation})=>{
                      {temps
                         ? temps.map((item,index) => (
                             <View style={styles.vlseg} key={index}>
-                                <Text style={styles.tseg}>{`Vuelta:${index+1} ${item.toString()}`}</Text>
+                                <Text style={styles.tseg}>{`Vuelta ${index+1}: ${item.toString()}`}</Text>
                             </View>
                         ))
                         : null}
