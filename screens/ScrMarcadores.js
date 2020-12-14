@@ -66,13 +66,7 @@ const ScrMarcadores=({route,navigation})=>{
 
     },[]);
     
-    if(!fecha){
-      return (
-        <View style={{backgroundColor:"#ffffff",flex:1,justifyContent:"center",alignContent:"center"}}>
-          <Image source={require("../assets/giphy.gif")} style = {{height:400,width:width}}/>
-        </View>  
-    )
-    }
+    
     //Pantalla Marcadores
   return( 
     <Container>
@@ -133,14 +127,12 @@ const styles = StyleSheet.create({
     },
     crdi:{
       margin:1,
+      flex:1,
+      flexWrap:"wrap",
       borderBottomRightRadius:25,
       borderTopLeftRadius:25,
     },
-    crd:{
-      
-      borderRadius:10
-        
-    },
+   
 });
 
 export default ScrMarcadores;

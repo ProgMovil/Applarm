@@ -139,9 +139,10 @@ const ScrPrincipal=({route,navigation})=>{
                 <View style={{backgroundColor:"#C6C6C6"}}>
                     <Button style={styles.bmarca} onPress={()=> isRunning?false:navigation.navigate("Marcadores")}>
                         <Text style={styles.tmarca}>Marcadores</Text>
+                        <Icon name="arrow-forward" style={styles.icn}/>
                     </Button>
                 </View>
-                <View style={styles.bid}>
+                <View style={styles.bid2}>
                     <TouchableOpacity  onPress={ ()=>   (isRunning?poptoast2():handlerNewDate())}>  
                                 <Text style={styles.btni}>Guardar</Text>
                     </TouchableOpacity>
@@ -229,8 +230,10 @@ const styles = StyleSheet.create({
     bmarca:{
         width:width,
         justifyContent:"center",
-        backgroundColor:"#F0F0F0",
-        
+        backgroundColor:"#fff",
+      
+              
+              
 
     },
     tmarca:{
@@ -285,6 +288,14 @@ const styles = StyleSheet.create({
         justifyContent:"space-evenly",
         alignItems:"center",
     },
+    bid2:{
+        flex:1/8,
+        backgroundColor:"#C6C6C6",
+        flexDirection:"row",
+        justifyContent:"space-evenly",
+        alignItems:"center",
+        
+    },
     btni:{
         padding:5,
        backgroundColor:"#FC4D5D",
@@ -321,6 +332,11 @@ const styles = StyleSheet.create({
         color:"#fff",
         borderRadius:25,
      },
+     icn:{
+
+        color:"#FC4D5D",
+        fontSize:35,
+    },
 
 });
     
