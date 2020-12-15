@@ -46,7 +46,7 @@ const ScrCronoinfo=({route,navigation})=>{
    useEffect(()=>{
       lookDates(id);
      console.log(vuelta)
- },[]);
+ },[id]);
 
       const borrar =() =>{
         // Works on both Android and iOS
